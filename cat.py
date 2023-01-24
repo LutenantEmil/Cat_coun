@@ -1,7 +1,6 @@
 import requests
 from requests.exceptions import HTTPError
 
-numisma_dictionary = []
 url = 'http://numismatics.org/ocre/results?q=authority_facet%3A"Augustus"&lang=en'
 response = requests.get(url)
 a = response.text
@@ -30,3 +29,42 @@ for i in range(d-c):
 print ("название монеты =", h)
 
 c = (a.find("<dt>Date</dt>"))
+d = (a.find("</dd></dl>",c))+4
+b = ""
+for i in range(d-c):
+    b += a[i+c]
+
+c = (b.find("dd"))+3
+d = (b.find("</dd"))
+data = ""
+for i in range(d-c):
+    data += b[i+c]
+print ("датировка =", data)
+
+c = (b.find("dd",d+4))+3
+d = (b.find("</dd",c))
+nomination = ""
+for i in range(d-c):
+    nomination += b[i+c]
+print ("номинал =", nomination)
+
+c = (b.find("dd",d+4))+3
+d = (b.find("</dd",c))
+monet_house = ""
+for i in range(d-c):
+    monet_house += b[i+c]
+print ("Монетный двор =", monet_house)
+
+c = (b.find("dd",d+4))+3
+d = (b.find("</dd",c))
+avers = ""
+for i in range(d-c):
+    avers += b[i+c]
+print ("Аверс =", avers)
+
+c = (b.find("dd",d+4))+3
+d = (b.find("</dd",c))
+revers = ""
+for i in range(d-c):
+    revers += b[i+c]
+print ("Реверс =", revers)
